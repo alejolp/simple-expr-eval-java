@@ -40,6 +40,15 @@ public class SimpleExprParserTest
     }
 
     @Test
+    public void tokensTest3() {
+    	List<String> tokens0 = SimpleExprParser.tokenize("2.0 + 3.0");
+    	assertEquals(tokens0.size(), 3);
+    	assertEquals(tokens0.get(0), "2.0");
+    	assertEquals(tokens0.get(1), "+");
+    	assertEquals(tokens0.get(2), "3.0");
+    }
+
+    @Test
     public void testSimpleExpr1() {
     	List<String> tokens0 = SimpleExprParser.tokenize("2 + 3");
     	double d = SimpleExprParser.parse(tokens0);
@@ -116,6 +125,51 @@ public class SimpleExprParserTest
     	assertEquals(d, 4.0, 1e-15);
     }
 
+    @Test
+    public void testSimpleExpr12() {
+    	List<String> tokens0 = SimpleExprParser.tokenize("2 + 2 + 2 + 2 + 2");
+    	double d = SimpleExprParser.parse(tokens0);
+    	assertEquals(d, 10.0, 1e-15);
+    }
+
+    @Test
+    public void testSimpleExpr13() {
+    	List<String> tokens0 = SimpleExprParser.tokenize("2 - 2 + 2 - 2 + 2");
+    	double d = SimpleExprParser.parse(tokens0);
+    	assertEquals(d, 2.0, 1e-15);
+    }
+
+    @Test
+    public void testSimpleExpr14() {
+    	List<String> tokens0 = SimpleExprParser.tokenize("2 * 2 * 2 * 2 * 2");
+    	double d = SimpleExprParser.parse(tokens0);
+    	assertEquals(d, 32.0, 1e-15);
+    }
+
+    @Test
+    public void testSimpleExpr15() {
+    	// test left associativity expression 
+    	List<String> tokens0 = SimpleExprParser.tokenize("2 / 2 / 2 / 2 / 2");
+    	double d = SimpleExprParser.parse(tokens0);
+    	assertEquals(d, 0.125, 1e-15);
+    }
+
+    @Test
+    public void testSimpleExpr16() {
+    	// test left associativity expression
+    	List<String> tokens0 = SimpleExprParser.tokenize("4 / 2 * 7");
+    	double d = SimpleExprParser.parse(tokens0);
+    	assertEquals(d, 14.0, 1e-15);
+    }
+
+    @Test
+    public void testSimpleExpr17() {
+    	// test floating point number
+    	List<String> tokens0 = SimpleExprParser.tokenize("1.5 + 1.5");
+    	double d = SimpleExprParser.parse(tokens0);
+    	assertEquals(d, 3.0, 1e-15);
+    }
+    
     @Test
     public void testMinusExpr1() {
     	List<String> tokens0 = SimpleExprParser.tokenize("2 + -(-2)");
