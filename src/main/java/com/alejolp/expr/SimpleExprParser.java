@@ -6,7 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/** Self-contained pure-Java simple expressions parser.
+/** Self-contained pure-Java simple expressions parser. 
+ * 
+ * This parser assumes that expressions are always valid. 
+ * 
+ * Thus, error checking is done with RuntimeException, NullPointerException or Stack Overflows.  
+ * 
+ * See the SimpleExprParserTest for tests.
  * 
  * Examples:
  * 
@@ -135,13 +141,13 @@ public class SimpleExprParser {
 	
 	public static double parse(List<String> tokens) {
 		/*
-		 * Grammar: (the {...} is 0+ repetition)
+		 * Grammar: (the {...} means 0+ repetition)
 		 * 
 		 * expr: term | term { + term } | term { - term }
 		 * 
 		 * term: factor | factor { * factor } | factor { / factor } 
 		 * 
-		 * factor: - ( expr ) | ( expr ) | value
+		 * factor: - factor | ( expr ) | value
 		 * 
 		 */
 		int start = 0;
